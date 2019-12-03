@@ -22,23 +22,31 @@ js以什么形式(语法)存在
     指令: vue自定义标签属性  例子: v-model
     插值: 动态显示数据, 例子: {{msg}}
     指令和插值中的表达式自动从data中动态取数据
+双向数据绑定, 2个重要特点:
+    只要改变data中的数据值, 界面就自动更新 ===> 数据(单向)绑定  data ==> 模板页面
+    改变页面输入数据, data中的数据也可以自动改变  ===> 页面 ==> data
 -->
 <div id="test">
   <input type="text" v-model="msg">
   <p>Hello {{msg}}</p>
 </div>
-<p>Hello {{msg}}</p>
+<p>Hello {{msg}}11111</p>
 
 <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script> -->
 <script src="../js/vue.js"></script>
 <script>
   /* 创建Vue的实例 */
-  new Vue({ // 配置对象: 属性名是一些特定的名称
+  const vm = new Vue({ // 配置对象: 属性名是一些特定的名称
     el: '#test', // 值是选择器  element  用来查找根元素
     data: { // 包含多个可变数据的对象, 相当于state, 为模板页面提供数据
       msg: 'atguigu'
     }
   })
+
+  setTimeout(() => {
+    vm.msg = 'baidu'
+  }, 2000);
+
 </script>
 
 </body>
