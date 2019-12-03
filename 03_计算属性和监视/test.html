@@ -26,6 +26,59 @@
 
 <script type="text/javascript" src="../js/vue.js"></script>
 <script type="text/javascript">
+  /* 
+  给对象添加一个fullName属性, 要求如下
+  1. fullName属性的值: firstName-lastName
+  2. 如果改变firstName/lastName, fullName也要跟着变
+  3. 如果改变了fullName, firstName/lastName也随之改变
+  */
+  const p = {
+    firstName: 'A',
+    lastName: 'B'
+  }
+
+  // p.fullName = p.firstName + '-' + p.lastName  // 不能达到2和3的要求
+  // 使用Object.defineProperty()
+  Object.defineProperty(p, 'fullName', { // 匹配对象 ==> 属性描述符
+    // 数据描述符
+    // value: 'C-D'
+    // writable: false
+    // 存取描述符
+    // 当读取属性值时自动调用, 函数的返回值作为属性值, this是属性所属的对象
+    get () {
+      console.log('get()')
+      return this.firstName + '-' + this.lastName
+    },
+
+     // 当修改了属性值时自动调用, 用来监视属性值的变化, this是属性所属的对象
+    set (value) { // 最新的属性值   E-F
+      console.log('set()', value)
+      // 去更新firstName和lastName
+      const names = value.split('-')
+      this.firstName = names[0]
+      this.lastName = names[1]
+    }
+  })
+
+
+  /* 
+  弄清楚回调函数的3个问题?
+  1. 什么时候回调执行?
+  2. 它的作用是什么?
+  3. 函数中的this是谁?
+  */
+
+
+
+  console.log(p.fullName) // A-B
+
+  p.firstName = 'C' // 这里没有去改fullName
+  p.lastName = 'D'
+  console.log(p.fullName)  // 应该是C-D, 
+
+  p.fullName = 'E-F'
+  console.log(p.firstName, p.lastName) // 应该是E F
+
 
 </script>
 </body>
