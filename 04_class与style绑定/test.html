@@ -11,7 +11,7 @@
       background: blue;
     }
     .classC {
-      font-size: 20px;
+      font-size: 30px;
     }
   </style>
 </head>
@@ -33,13 +33,42 @@
 <div id="demo">
   <h2>1. class绑定: :class='xxx'</h2>
 
+  <p class="classC" :class="myClass">xxxxx</p> <!-- 动态class什么时候用字符串语法:  类名是不确定的 -->
+  <p :class="{classA: hasA, classB: hasB}">yyyy</p> <!-- 动态class什么时候用对象语法:  类名确定, 但不确定有没有-->
+  <p :class="['classA', 'classB']">zzz</p>
+
   <h2>2. style绑定</h2>
+  <p :style="{color: myColor, fontSize: mySize + 'px'}">xxxxx</p>
+
+
+  <button @click="update">更新</button>
 
 </div>
 
 <script type="text/javascript" src="../js/vue.js"></script>
 <script type="text/javascript">
+  new Vue({
+    el: '#demo',
+    data () {
+      return {
+        myClass: 'classA',
+        hasA: true,
+        hasB: false,
+        myColor: 'blue',
+        mySize: 20
+      }
+    },
 
+    methods: {
+      update () {
+        this.myClass = 'classB'
+        this.hasA = !this.hasA
+        this.hasB = !this.hasB
+        this.myColor = '#ff0000'
+        this.mySize = 30
+      }
+    }
+  })
 </script>
 </body>
 </html>
