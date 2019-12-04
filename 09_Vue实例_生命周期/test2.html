@@ -25,7 +25,7 @@
 
 <div id="test">
   <button @click="destroyVM">destroy vue</button>
-  <p v-show="isShow">xxxxxxxx</p>
+  <p v-show="isShow" ref="content">{{isShow ? 'show...' : 'hide...' }}</p>
 </div>
 
 <script type="text/javascript" src="../js/vue.js"></script>
@@ -38,17 +38,43 @@
       }
     },
 
+    beforeCreate() {
+      console.log('beforeCreate()', this.isShow)
+    },
+    // 实现数据代理: 后面可以通过vm读取data中的数据
+    created() {
+      console.log('created()', this.isShow)
+    },
+
+    beforeMount() {
+      console.log('beforeMount()')
+    },
+
     // 在第一次显示之后执行1次
     mounted() {
+      console.log('mounted()')
       this.intervalId = setInterval(() => {
         console.log('-----')
         this.isShow = !this.isShow
       }, 1000)
     },
 
+    beforeUpdate() { // 读的是老的界面
+      console.log('beforeUpdate()', this.isShow, this.$refs.content.innerHTML)
+    },
+
+    updated() { // 读的是新的界面
+      console.log('updated()', this.isShow, this.$refs.content.innerHTML)
+    },
+
     // 销毁之前执行1次
     beforeDestroy() {
+      console.log('beforeDestroy()')
       clearInterval(this.intervalId)
+    },
+
+    destroyed() {
+      console.log('destroyed()')
     },
 
     methods: {
