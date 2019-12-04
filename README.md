@@ -21,14 +21,19 @@
 # 2. 基本使用
 	1). 引入vue.js
 	2). 创建Vue实例对象(vm), 指定选项(配置)对象
-		el : 指定dom标签容器的选择器
-		data : 指定初始化状态数据的对象/函数(返回一个对象)
+			el: 指定dom标签容器的选择器
+			data: 指定初始化状态数据的对象/函数(返回一个对象)
 	3). 在页面模板中使用{{}}或vue指令
-		
+	4). MVVM模式
+			M: Model(模型), vue中是data(为view提供数据)
+			V: View(视图), vue中是模板页面(显示data中的数据)
+			VM: ViewModel(视图模型), vue中是Vue实例对象(管理者: 数据绑定/DOM监听) 
+
 # 3. Vue对象的选项
 ## 1). el
 	指定dom标签容器的选择器
 	Vue就会管理对应的标签及其子标签
+	也可以通过$mount()来处理
 
 ## 2). data
 	对象或函数类型
@@ -36,6 +41,12 @@
 	vm也会自动拥有data中所有属性
 	页面中可以直接访问使用
 	数据代理: 由vm对象来代理对data中所有属性的操作(读/写)
+	data数据监视的特点:
+			1. vue会监视data中所有层次的属性
+			2. 对象中的属性数据通过添加set方法来来实现监视
+			3. 数组中的元素也实现了监视: 重写数组一系列更新元素的方法
+					1). 调用原生对应的方法对元素进行处理
+					2). 去更新界面
 
 ## 3). methods
 	包含多个方法的对象
@@ -44,21 +55,26 @@
 	所有的方法由vue对象来调用, 访问data中的属性直接使用this.xxx
 
 ## 4). computed
-	包含多个方法的对象
-	对状态属性进行计算返回一个新的数据, 供页面获取显示
-	一般情况下是相当于是一个只读的属性
-	利用set/get方法来实现属性数据的计算读取, 同时监视属性数据的变化
+	包含多个计算属性的对象
+	根据已有属性进行计算返回一个新的数据, 供页面获取显示
+	如果同时还需要监视计算属性的变化, 需要使用getter/setter
+	计算属性有缓存, 内部使用对象容器缓存, 可以减少计算的次数
 	如何给对象定义get/set属性
-		在创建对象时指定: get name () {return xxx} / set name (value) {}
-	  	对象创建之后指定: Object.defineProperty(obj, age, {get(){}, set(value){}})
-
+			对象创建之后指定: Object.defineProperty(obj, age, {get(){}, set(value){}})
+			在创建对象时指定: get name () {return xxx} / set name (value) {}
+	弄清楚回调函数的3个问题?
+			什么时候回调执行?
+			它的作用是什么?
+			函数中的this是谁?
+			
 ## 5). watch
 	包含多个属性监视的对象
 	分为一般监视和深度监视
-		'xxx' : {
-			deep : true,
-			handler : fun(value)
-		}
+			xxx: function (value) {},
+			'xxx' : {
+				deep : true,
+				handler : fun(value)
+			}
 	另一种添加监视方式: vm.$watch('xxx', funn)
 
 # 4. 过渡动画
@@ -103,7 +119,7 @@
 	
 # 7. vue内置指令
 	v-text/v-html: 指定标签体
-    	* v-text : 当作纯文本
+		* v-text : 当作纯文本
 		* v-html : 将value作为html标签来解析
 	v-if v-else v-show: 显示/隐藏元素
 		* v-if : 如果vlaue为true, 当前标签会输出在页面中
