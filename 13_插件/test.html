@@ -6,9 +6,29 @@
 </head>
 <body>
 
-<script type="text/javascript" src="../js/vue.js"></script>
-<script type="text/javascript">
+<div id="test">
+  <p v-my-directive="msg"></p>
+</div>
 
+<script type="text/javascript" src="../js/vue.js"></script>
+<script src="./vue-myPlugin.js"></script>
+<script type="text/javascript">
+  console.log(MyPlugin)
+  // 声明使用Vue插件
+  Vue.use(MyPlugin) // 内部调用插件的install方法来安装插件
+
+  Vue.myGlobalMethod()
+
+  const vm = new Vue({
+    el: '#test',
+    data() {
+      return {
+        msg: 'atguigu.com'
+      }
+    },
+  })
+
+  vm.$myMethod()
 </script>
 </body>
 </html>
