@@ -102,8 +102,16 @@
 # 5. 生命周期
 	vm/组件对象
 	生命周期图
+			beforeCreate()
+			created()
+			beforeMount()
+			mounted()
+			beforeUpdate()
+			updated()
+			beforeDestroy()
+			Destroyed()
 	主要的生命周期函数(钩子)
-    	created() / mounted(): 启动异步任务(启动定时器,发送ajax请求, 绑定监听)
+    	mounted(): 启动异步任务(启动定时器,发送ajax请求, 绑定监听)
     	beforeDestroy(): 做一些收尾的工作
 
 # 6. 自定义过滤器
