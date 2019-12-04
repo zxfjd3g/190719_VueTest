@@ -1,3 +1,6 @@
+1. 回调函数的3个问题
+2. vm监视data中数据的特点
+
 # 1. Vue.js是什么?
 	1). 一位华裔前Google工程师(尤雨溪)开发的前端js库
 	2). 作用: 动态构建用户界面
@@ -70,7 +73,7 @@
 ## 5). watch
 	包含多个属性监视的对象
 	分为一般监视和深度监视
-			xxx: function (value) {},
+			'xxx.yyy': function (value) {},
 			'xxx' : {
 				deep : true,
 				handler : fun(value)
@@ -126,7 +129,7 @@
 		* v-else : 与v-if一起使用, 如果value为false, 将当前标签输出到页面中
 		* v-show: 就会在标签中添加display样式, 如果vlaue为true, display=block, 否则是none
 	v-for : 遍历
-		* 遍历数组 : v-for="(person, index) in persons"   
+		* 遍历数组 : v-for="(person, index) in persons"  :key="person.id" 
 		* 遍历对象 : v-for="value in person"   $key
 	v-on : 绑定事件监听
 		* v-on:事件名, 可以缩写为: @事件名
@@ -139,9 +142,8 @@
 		* :class
 		  * :class="a"
 			* :class="{classA : isA, classB : isB}"
-			* :class="[classA, classB]"
 		* :style
-			:style="{color : color}"
+			:style="{color}"
 	v-model
 		* 双向数据绑定
 		* 自动收集用户输入数据

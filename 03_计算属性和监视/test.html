@@ -34,7 +34,16 @@
   */
   const p = {
     firstName: 'A',
-    lastName: 'B'
+    lastName: 'B',
+
+    get fullName2 () {
+      return this.firstName + '-' + this.lastName
+    },
+    set fullName2 (value) {
+      const names = value.split('-')
+      this.firstName = names[0]
+      this.lastName = names[1]
+    }
   }
 
   // p.fullName = p.firstName + '-' + p.lastName  // 不能达到2和3的要求
